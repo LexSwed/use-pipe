@@ -1,7 +1,5 @@
 import React, { Context, useReducer, Dispatch, createContext, FunctionComponent, useContext } from 'react';
 
-export { default as createStore2 } from './createStore2';
-
 function createStore<D, A extends StoreActions>(
 	reducer: StoreReducer<D, any>,
 	actions: A,
