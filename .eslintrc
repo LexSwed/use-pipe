@@ -1,0 +1,43 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"extends": ["prettier", "prettier/react", "prettier/@typescript-eslint"],
+	"env": {
+		"browser": true,
+		"jest": true,
+		"jquery": true,
+		"es6": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 8,
+		"sourceType": "module",
+		"project": "./tsconfig.json",
+		"ecmaFeatures": {
+			"jsx": true,
+			"experimentalObjectRestSpread": true
+		}
+	},
+	"plugins": ["@typescript-eslint", "react", "prettier", "react-hooks"],
+	"rules": {
+		"space-before-function-paren": [0, "always"],
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error",
+		"react-hooks/rules-of-hooks": "error",
+		"react/prop-types": "off",
+		"react/no-danger": "off",
+		"react/display-name": "off",
+		"prettier/prettier": "error",
+		"no-unused-vars": "off",
+		"camelcase": "off",
+		"@typescript-eslint/camelcase": ["error", { "properties": "never", "ignoreDestructuring": true }],
+		"@typescript-eslint/no-unused-vars": "error",
+		"padding-line-between-statements": "off",
+		"no-use-before-define": "off",
+		"@typescript-eslint/no-use-before-define": ["error", { "typedefs": false, "functions": false }],
+		"quotes": ["warn", "single", { "allowTemplateLiterals": true, "avoidEscape": false }]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
+}
