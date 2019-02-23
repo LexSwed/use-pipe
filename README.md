@@ -227,7 +227,7 @@ const Component = () => {
 
 ```js
 // stores/user.js
-const [UserInfo, UserInfoProvider] = createStore(reducer, actions, { email: '' });
+const [UserInfo, UserProvider] = createStore(reducer, actions, { email: '' });
 // App.jsx
 import { UserProvider } from 'stores/user';
 import Routes from './Routes';
