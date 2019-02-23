@@ -21,17 +21,17 @@ You define your action creators and functions that make use of redux-thunk middl
 ```js
 // actions.js
 function fetchBooks() {
-	// maybe do smth
-	return (dispatch) => {
-		// dispatch actions
-	}
+  // maybe do smth
+  return (dispatch) => {
+    // dispatch actions
+  }
 }
 
 function getBook(id) {
-	// maybe do smth
-	return (dispatch) => {
-		// dispatch actions
-	}
+  // maybe do smth
+  return (dispatch) => {
+    // dispatch actions
+  }
 }
 ```
 Then you create your store and use functions to connect them to the store and component:
@@ -44,26 +44,26 @@ import { connect } from 'react-redux'
 import { fetchBooks } from './actions'; // import
 
 class BooksPage extends Component {
-	componentDidMount() {
-		this.props.fetchBooks();
-	}
+  componentDidMount() {
+    this.props.fetchBooks();
+  }
 
-	render() {
-		const { isLoading, books = [] } = this.props;
+  render() {
+    const { isLoading, books = [] } = this.props;
 
-		return isLoading ? <Loader /> : books.map(book => <BookItem key={book.id} book={book} />)
-	}
+    return isLoading ? <Loader /> : books.map(book => <BookItem key={book.id} book={book} />)
+  }
 }
 
 const mapStateToProps = state => ({
-	books: state.books,
-	isLoading: state.loading
+  books: state.books,
+  isLoading: state.loading
 })
 
 const mapDispatchToProps = dispatch => {
-	return {
-		fetchBooks: () => dispatch(fetchBooks()) // create dispatcher
-	}
+  return {
+    fetchBooks: () => dispatch(fetchBooks()) // create dispatcher
+  }
 } // map
 
 connect(mapStateToProps, mapDispatchToProps)(BooksList); // connect
@@ -76,17 +76,17 @@ It just seems like a lot of steps to do. With proposed API, what you do is:
 import { useBooks } from './books';
 
 const BooksPage = () => {
-	const { books, isLoading, fetchBooks } = useBooks((store, {fetchBooks}) => ({
-		isLoading: state.loading,
-		books: state.books,
-		fetchBooks,
-	})); // just map
+  const { books, isLoading, fetchBooks } = useBooks((store, {fetchBooks}) => ({
+    isLoading: state.loading,
+    books: state.books,
+    fetchBooks,
+  })); // just map
 
-	useEffect(() => {
-		fetchBooks({ first: 20 }); // and use
-	}, []);
+  useEffect(() => {
+    fetchBooks({ first: 20 }); // and use
+  }, []);
 
-	return isLoading ? <Loader /> : <BooksList />;
+  return isLoading ? <Loader /> : <BooksList />;
 }
 ```
 
@@ -100,7 +100,7 @@ Let's imagine we're building a UI for user profile where user can, for example, 
 import createStore from 'use-pipe';
 
 const reducer = {
-	setEmail: (state, payload) => ({...state, email: payload});
+  setEmail: (state, payload) => ({...state, email: payload});
 }; // create reducer
 
 export const [context, Provider, useStore] = createStore(reducer, null, { email: '' }); // create store with reducer and initial state
@@ -109,21 +109,21 @@ export const [context, Provider, useStore] = createStore(reducer, null, { email:
 // YourComponent, descendant of Provider:
 import { useStore } from './store';
 const Component = () => {
-	const { email, dispatch } = useStore((state, _, dispatch) => ({ // second argument is null
-		email: state.email,
-		dispatch
-	}))
+  const { email, dispatch } = useStore((state, _, dispatch) => ({ // second argument is null
+    email: state.email,
+    dispatch
+  }))
 
-	const onSubmit = (email) => dispatch({ type: 'setEmail', payload: email }); // create submit handler
+  const onSubmit = (email) => dispatch({ type: 'setEmail', payload: email }); // create submit handler
 
-	return <EmailForm onSubmit={onSubmit} />; // some input which handles form
+  return <EmailForm onSubmit={onSubmit} />; // some input which handles form
 }
 ```
 But you usually would want to decouple your action creators from components:
 
 ```js
 const actions = {
-	setEmail: email => dispatch => ({ type: 'setEmail', payload: email })
+  setEmail: email => dispatch => ({ type: 'setEmail', payload: email })
 };
 
 export const [context, Provider, useStore] = createStore(reducer, actions, { email: '' }); // now with actions in place
@@ -131,13 +131,13 @@ export const [context, Provider, useStore] = createStore(reducer, actions, { ema
 Now you can use it in your component:
 ```js
 const Component = () => {
-	const { email, setData } = useStore((state, actions) => ({
-		email: state.email,
-		setEmail: actions.setData;
-	}))
+  const { email, setData } = useStore((state, actions) => ({
+    email: state.email,
+    setEmail: actions.setData;
+  }))
 
-	// use it
-	return <EmailInputForm onSubmit={setData} />
+  // use it
+  return <EmailInputForm onSubmit={setData} />
 }
 ```
 
@@ -150,7 +150,7 @@ It's an object with a key as `action.type` and value as a function that takes cu
 const SET_DATA = 'SET_DATA';
 
 const reducer = {
-	[SET_DATA]: (state, payload) => ({...state, data: payload }) // payload can be named differently: data/books/users, etc)
+  [SET_DATA]: (state, payload) => ({...state, data: payload }) // payload can be named differently: data/books/users, etc)
 }
 ```
 Same example with redux:
@@ -159,12 +159,12 @@ const SET_DATA = 'SET_DATA';
 
 // `payload` can be named differently, not only payload, but you can't control it from reducer (e.g. what if it's data/books/users, etc)
 function reducer(state, { type, payload }) {
-	switch type {
-		case [SET_DATA]:
-			return {...state, data: payload }
-		default:
-			return state; // don't forget to write default
-	}
+  switch type {
+    case [SET_DATA]:
+      return {...state, data: payload }
+    default:
+      return state; // don't forget to write default
+  }
 }
 ```
 
@@ -173,16 +173,16 @@ It's an object with function name as a key, and as a value a function which take
 Example:
 ```js
 const fetchBookById = (dispatch, state) => (bookId) => {
-	dispatch({ type: 'setLoading', loading: true });
-	const { iamge, title } = state.books.find(book => book.id === bookId); // use state to get book info which we already have
-	dispatch({ type: 'setImageAndTitle', payload: { id: bookId, image, title }}); // and set it to state to show some initial data while loading all information
-	const book = await fetch(`${booksUrl}/?book=${bookId}`); // some API to get book info
-	dispatch({ type: 'setLoading', loading: false });
-	dispatch({ type: 'setBookData', book });
+  dispatch({ type: 'setLoading', loading: true });
+  const { iamge, title } = state.books.find(book => book.id === bookId); // use state to get book info which we already have
+  dispatch({ type: 'setImageAndTitle', payload: { id: bookId, image, title }}); // and set it to state to show some initial data while loading all information
+  const book = await fetch(`${booksUrl}/?book=${bookId}`); // some API to get book info
+  dispatch({ type: 'setLoading', loading: false });
+  dispatch({ type: 'setBookData', book });
 };
 
 const actions = { // create actions object to use in store
-	fetchBookById
+  fetchBookById
 };
 ```
 
@@ -217,9 +217,9 @@ import React, { useContext } from 'react';
 import { UserInfo } from 'stores/user';
 
 const Component = () => {
-	const [userState, userActions] = useContext(UserInfo);
+  const [userState, userActions] = useContext(UserInfo);
 
-	// use all state
+  // use all state
 }
 ```
 
@@ -233,7 +233,7 @@ import { UserProvider } from 'stores/user';
 import Routes from './Routes';
 
 const App = () => {
-	return (<UserProvider><Routes /></UserProvider>);
+  return (<UserProvider><Routes /></UserProvider>);
 }
 ```
 
@@ -247,19 +247,19 @@ const [UserInfo, UserInfoProvider, useUserInfo] = createStore(reducer, actions, 
 import { useUserInfo } from 'stores/user';
 
 const Component = () => {
-	// take only one field;
-	const email = useUserInfo(state => state.email);
-	// select with action and return a tuple
-	const [ email, setEmail ] = useUserInfo((state, actions) => [state.email, actions.setEmail]);
-	// map state
-	const { email, fetchInfo, setEmail } = useUserInfo((state, actions) => ({
-		email: state.email, 
-		setEmail: actions.setEmail,
-		fetchInfo: actions.fetchInfo
-		}
-	));
+  // take only one field;
+  const email = useUserInfo(state => state.email);
+  // select with action and return a tuple
+  const [ email, setEmail ] = useUserInfo((state, actions) => [state.email, actions.setEmail]);
+  // map state
+  const { email, fetchInfo, setEmail } = useUserInfo((state, actions) => ({
+    email: state.email, 
+    setEmail: actions.setEmail,
+    fetchInfo: actions.fetchInfo
+    }
+  ));
 
-	// use it
+  // use it
 }
 ```
 
@@ -271,23 +271,23 @@ import api from './api';
 import createStore from 'use-pipe';
 
 const actions = {
-	getBooks: dispatch => async filters => {
-		dispatch({ type: 'setLoading', payload: true });
+  getBooks: dispatch => async filters => {
+    dispatch({ type: 'setLoading', payload: true });
 
-		const books = await api.getBooks();
-		dispatch({ type: 'setLoading', payload: false });
-		dispatch({ type: 'setBooks', payload: books });
-	}
+    const books = await api.getBooks();
+    dispatch({ type: 'setLoading', payload: false });
+    dispatch({ type: 'setBooks', payload: books });
+  }
 };
 
 const reducer = {
-	setLoading: (state, loading) => ({ ...state, loading }),
-	setBooks: (state, books) => ({ ...state, books })
+  setLoading: (state, loading) => ({ ...state, loading }),
+  setBooks: (state, books) => ({ ...state, books })
 };
 
 export const [BooksContext, BooksProvider, useBooks] = createStore(reducer, actions, {
-	loading: false,
-	books: []
+  loading: false,
+  books: []
 });
 
 BooksContext.displayName = 'Books';
@@ -304,11 +304,11 @@ import { BooksProvider } from 'modules/books';
 import Library from 'lib/Library';
 
 const App = () => {
-	return (
-		<BooksProvider>
-			<Library />
-		</BooksProvider>
-	);
+  return (
+    <BooksProvider>
+      <Library />
+    </BooksProvider>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));
@@ -318,24 +318,24 @@ ReactDOM.render(<App />, document.getElementById('app'));
 // src/lib/Book
 
 const Library = () => {
-	const { loading, getBooks } = useBooks((state, actions) => ({
-		loading: state.loading,
-		getBooks: actions.getBooks
-	})); // selecting what we want
+  const { loading, getBooks } = useBooks((state, actions) => ({
+    loading: state.loading,
+    getBooks: actions.getBooks
+  })); // selecting what we want
 
-	useEffect(() => {
-		getBooks();
-	}, []);
+  useEffect(() => {
+    getBooks();
+  }, []);
 
-	return loading ? <Loader /> : <BooksList />;
+  return loading ? <Loader /> : <BooksList />;
 };
 ```
 
 ```js
 // src/lib/BooksList
 const BooksList = () => {
-	const books = useBooks(state => state.books); // can return anything
+  const books = useBooks(state => state.books); // can return anything
 
-	return books.map(book => <Book key={book.id} title={book.title} author={book.author} />);
+  return books.map(book => <Book key={book.id} title={book.title} author={book.author} />);
 };
 ```
