@@ -92,29 +92,31 @@ const BooksPage = () => {
 
 ## FAQ
 
-> What is simpliest store I can make?
+> What is the simpliest store I can make?
 
-Let's imagine we're building UI for user profile where user can, for example, set his email:
+Let's imagine we're building a UI for user profile where user can, for example, set his email:
 
 ```js
 import createStore from 'use-pipe';
 
 const reducer = {
 	setEmail: (state, payload) => ({...state, email: payload});
-} // create reducer
+}; // create reducer
 
 export const [context, Provider, useStore] = createStore(reducer, null, { email: '' }); // create store with reducer and initial state
 
-// Since you dont provide actions, you can dispatch actions directly:
+// Since we didn't provide actions map, we can dispatch actions directly:
 // YourComponent, descendant of Provider:
 import { useStore } from './store';
 const Component = () => {
-	const { email, dispatch } = useStore((state, _, dispatch) => ({
+	const { email, dispatch } = useStore((state, _, dispatch) => ({ // second argument is null
 		email: state.email,
 		dispatch
 	}))
 
-	return <EmailInputForm onSubmit={(email) => dispatch({ type: 'setEmail', payload: email })} />; // some input which handles form
+	const onSubmit = (email) => dispatch({ type: 'setEmail', payload: email }); // create submit handler
+
+	return <EmailForm onSubmit={onSubmit} />; // some input which handles form
 }
 ```
 But you usually would want to decouple your action creators from components:
