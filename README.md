@@ -60,13 +60,13 @@ const mapStateToProps = state => ({
 	isLoading: state.loading
 })
 
-const mapDispatchToProps = dispatch => { // map
+const mapDispatchToProps = dispatch => {
 	return {
 		fetchBooks: () => dispatch(fetchBooks()) // create dispatcher
 	}
-}
+} // map
 
-connect(mapStateToProps, mapDispatchToProps)(BooksList);
+connect(mapStateToProps, mapDispatchToProps)(BooksList); // connect
 ```
 
 It just seems like a lot of steps to do. With proposed API, what you do is:
@@ -79,8 +79,8 @@ const BooksPage = () => {
 	const { books, isLoading, fetchBooks } = useBooks((store, {fetchBooks}) => ({
 		isLoading: state.loading,
 		books: state.books,
-		fetchBooks, // just map
-	}));
+		fetchBooks,
+	})); // just map
 
 	useEffect(() => {
 		fetchBooks({ first: 20 }); // and use
