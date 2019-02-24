@@ -150,14 +150,13 @@ It's an object with a key as `action.type` and value as a function that takes cu
 const SET_DATA = 'SET_DATA';
 
 const reducer = {
-  [SET_DATA]: (state, payload) => ({...state, data: payload }) // payload can be named differently: data/books/users, etc)
-}
+  [SET_DATA]: (state, payload) => ({...state, data: payload })
+};
 ```
 Same example with redux:
 ```js
 const SET_DATA = 'SET_DATA';
 
-// `payload` can be named differently, not only payload, but you can't control it from reducer (e.g. what if it's data/books/users, etc)
 function reducer(state, { type, payload }) {
   switch type {
     case [SET_DATA]:
