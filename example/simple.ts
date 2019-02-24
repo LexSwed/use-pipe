@@ -1,4 +1,4 @@
-import createStore, { StoreAction, StoreReducer } from './index';
+import createStore, { StoreAction, StoreReducer } from '../src/index';
 
 enum Action {
 	setDetails = 'setDetails',
