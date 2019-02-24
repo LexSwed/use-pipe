@@ -1,4 +1,4 @@
-import React, { Context, useReducer, Dispatch, createContext, FunctionComponent, useContext } from 'react';
+import React, { Context, useReducer, Dispatch, createContext, FunctionComponent, useContext, Reducer } from 'react';
 
 function createStore<D = any, A extends StoreActions = any>(
 	reducer: StoreReducer<D, any>,
@@ -6,16 +6,18 @@ function createStore<D = any, A extends StoreActions = any>(
 	initialState?: D,
 ): Store<D, A> {
 	const context = createContext<ContextValue<D, A>>([initialState, {} as StoreThunks<A>]);
+	const reducerFn: Reducer<D, Action> = (state: D, { type, payload }): D => reducer[type](state, payload);
 
 	const StoreProvider: FunctionComponent = ({ children }) => {
-		const store = useStoreProvider(reducer, actions, initialState);
+		const [state, dispatch] = useReducer(reducerFn, initialState);
+		const thunks = createThunks(actions, dispatch, state);
 
-		return <context.Provider value={store}>{children}</context.Provider>;
+		return <context.Provider value={[state, thunks]}>{children}</context.Provider>;
 	};
 
 	const useStore: useStore<D, A> = selector => {
-		const [data, actions] = useContext(context);
-		const selected = selector(data, actions);
+		const [state, actions] = useContext(context);
+		const selected = selector(state, actions);
 
 		return selected;
 	};
@@ -24,20 +26,6 @@ function createStore<D = any, A extends StoreActions = any>(
 }
 
 export default createStore;
-
-function useStoreProvider<D, A extends StoreActions>(
-	reducer: StoreReducer,
-	actions: A,
-	initialState: D,
-): [D, StoreThunks<A>] {
-	const reducerFn = (state: D, { type, payload }: Action): D => reducer[type](state, payload);
-
-	const [data, dispatch] = useReducer(reducerFn, initialState);
-
-	const thunks = createThunks(actions, dispatch, data);
-
-	return [data, thunks];
-}
 
 function createThunks<A extends StoreActions, D>(actions: A, dispatch: Dispatch<Action>, state: D): StoreThunks<A> {
 	return Object.keys(actions).reduce(
