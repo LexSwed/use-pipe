@@ -38,7 +38,7 @@ function createThunks<A extends StoreActions, D>(actions: A, dispatch: Dispatch<
 }
 
 export type StoreReducer<D = any, ActionTypes extends string = string> = Readonly<
-	Record<ActionTypes, (state: D, ...payload: any[]) => D>
+	Record<ActionTypes, (state: D, payload: any) => D>
 >;
 
 export type StoreAction<ActionTypes extends string, D> = (
@@ -54,7 +54,9 @@ type StoreActions<
 
 export type ContextValue<D, A extends StoreActions> = [D, StoreThunks<A>];
 
-type StoreThunks<A extends StoreActions> = { [K in keyof A]: (...args: Parameters<A[K]>) => void | Promise<void> };
+type StoreThunks<A extends StoreActions> = {
+	[K in keyof A]: (...args: Parameters<A[K]>) => ReturnType<ReturnType<A[K]>>
+};
 
 type Action<ActionTypes extends string = string> = {
 	type: ActionTypes;

@@ -10,7 +10,8 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "rollup -c",
-		"watch": "rollup -cw"
+		"watch": "rollup -cw",
+		"check-types": "tsc --noEmit"
 	},
 	"author": "lexswed",
 	"license": "MIT",
@@ -37,5 +38,8 @@
 	},
 	"dependencies": {
 		"react": "^16.8.2"
-	}
+	},
+	"pre-commit": [
+		"check-types"
+	]
 }

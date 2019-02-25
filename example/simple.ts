@@ -40,3 +40,5 @@ const initialState: Data = {
 export const [context, Provider, useStore] = createStore(reducer, actions, initialState);
 
 export default context;
+
+const fn = useStore((_, actions) => actions.fetchDetails);
