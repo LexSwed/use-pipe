@@ -44,7 +44,7 @@ export type StoreReducer<D = any, ActionTypes extends string = string> = Readonl
 export type StoreAction<ActionTypes extends string, D> = (
 	dispatch: Dispatch<Action<ActionTypes>>,
 	state: D,
-) => void | Promise<void>;
+) => any;
 
 type StoreActions<
 	ActionTypes extends string = string,
