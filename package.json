@@ -22,7 +22,8 @@
 		"watch": "rollup -cw",
 		"lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
 		"check-types": "tsc --noEmit",
-		"version": "auto-changelog -p && git add CHANGELOG.md"
+		"version": "auto-changelog -p && git add CHANGELOG.md",
+		"publish": "npm run version && npm run build && git add dist/*"
 	},
 	"license": "MIT",
 	"devDependencies": {

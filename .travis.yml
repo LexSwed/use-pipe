@@ -1,10 +1,10 @@
 language: node_js
 script:
   - npm run lint
+  - npm run publish
 deploy:
   provider: npm
   email: "lexswed@gmail.com"
   api_key: $NPM_TOKEN
-  tag: next
   on:
     branch: master
