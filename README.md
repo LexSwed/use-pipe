@@ -2,6 +2,8 @@
 
 Global state management using React Context and Hooks API.
 
+[Sandbox to Counter example](https://codesandbox.io/s/wyyj8rr1pk)
+
 ## Description
 
 This small helper was built to solve one particluar problem - global state management that can be extended in features, if needed, added better debugging experience, if needed, have reliability of Redux with less boilerplate. And use Hooks of course.
