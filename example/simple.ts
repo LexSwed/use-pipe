@@ -27,7 +27,7 @@ const actions = {
 	fetchInfo,
 };
 
-const reducer: StoreReducer<Data, Action> = {
+const reducer: StoreReducer<Action, Data> = {
 	[Action.setDetails]: (state, details) => ({ ...state, details }),
 	[Action.setInfo]: (state, info) => ({ ...state, info }),
 };
