@@ -1,0 +1,7 @@
+deploy:
+  provider: npm
+  email: "lexswed@gmail.com"
+  api_key: $NPM_TOKEN
+  tag: next
+  on:
+    branch: master

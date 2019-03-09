@@ -1,4 +1,7 @@
 # use-pipe
+[![build](https://travis-ci.com/LexSwed/use-pipe.svg?branch=master)](https://travis-ci.com/LexSwed/use-pipe)
+[![npm package](https://img.shields.io/npm/v/use-pipe.svg?style=flat-square)](https://www.npmjs.com/package/use-pipe)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Global state management using React Context and Hooks API.
 
