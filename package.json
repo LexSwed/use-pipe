@@ -23,8 +23,7 @@
 		"lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
 		"check-types": "tsc --noEmit",
 		"version": "auto-changelog -p && git add CHANGELOG.md",
-		"git-update": "git add * && git commit -m \"Automatic build update\" ",
-		"publish": "npm run version && npm run build && npm run git-update"
+		"publish": "npm run version && npm run build"
 	},
 	"license": "MIT",
 	"devDependencies": {
