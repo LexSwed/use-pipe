@@ -4,5 +4,12 @@
 	"useTabs": true,
 	"tabWidth": 2,
 	"trailingComma": "all",
-	"parser": "typescript"
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"options": {
+				"parser": "typescript"
+			}
+		}
+	]
 }
