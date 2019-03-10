@@ -10,7 +10,7 @@
 		"url": "https://github.com/LexSwed/use-pipe/issues"
 	},
 	"description": "Yet another global state management with  React Context and Hooks",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
 	"files": [
