@@ -1,13 +1,4 @@
-import React, {
-	Context,
-	useReducer,
-	Dispatch,
-	createContext,
-	FunctionComponent,
-	useContext,
-	Reducer,
-	useRef,
-} from 'react';
+import React, { Context, useReducer, Dispatch, createContext, FunctionComponent, useContext, Reducer } from 'react';
 
 function createStore<S = any, A extends StoreActions = any>(
 	reducer: StoreReducer<any, S>,
