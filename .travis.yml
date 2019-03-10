@@ -12,5 +12,5 @@ after_success:
   - git config user.email "travis@travis.org"
   - git config user.name "travis"
   - git add *
-  - git commit --allow-empty -m "Automated build \#$TRAVIS_BUILD_NUMBER"
+  - git commit --allow-empty -m "Automated build #$TRAVIS_BUILD_NUMBER"
   - git push "https://${GITHUB_TOKEN}@github.com/LexSwed/use-pipe.git" master
