@@ -19,9 +19,9 @@ function createStore<S = any, A extends StoreActions = any>(
 
 	const StoreProvider: FunctionComponent = ({ children }) => {
 		const [state, dispatch] = useReducer(reducerFn, initialState);
-		const thunks = useRef(createThunks(actions, dispatch, state));
+		const thunks = createThunks(actions, dispatch, state);
 
-		return <context.Provider value={[state, thunks.current]}>{children}</context.Provider>;
+		return <context.Provider value={[state, thunks]}>{children}</context.Provider>;
 	};
 
 	const useStore: useStore<S, A> = selector => {
