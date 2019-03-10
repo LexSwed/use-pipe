@@ -1,7 +1,6 @@
 language: node_js
 script:
   - npm run lint
-  - npm run publish
 deploy:
   provider: npm
   email: "lexswed@gmail.com"
@@ -9,6 +8,7 @@ deploy:
   on:
     branch: master
 after_success:
+  - npm run publish
   - git config user.email "travis@travis.org"
   - git config user.name "travis"
   - git add *
