@@ -110,7 +110,7 @@ const reducer = {
 
 export const [context, Provider, useStore] = createStore(reducer, null, { email: '' }); // create store with reducer and initial state
 
-// Since we didn't provide actions map, we can dispatch actions directly:
+// Since we didn't provide actions map, we could dispatch actions directly:
 // YourComponent, descendant of Provider:
 import { useStore } from './store';
 const Component = () => {
@@ -136,13 +136,10 @@ export const [context, Provider, useStore] = createStore(reducer, actions, { ema
 Now you can use it in your component:
 ```js
 const Component = () => {
-  const { email, setData } = useStore((state, actions) => ({
-    email: state.email,
-    setEmail: actions.setData;
-  }))
+  const [email, setEmail] = useStore((state, actions) => [state.email, actions.setEmail]))
 
   // use it
-  return <EmailInputForm onSubmit={setData} />
+  return <EmailInputForm onSubmit={setEmail} />
 }
 ```
 
