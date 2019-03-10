@@ -12,5 +12,4 @@ deploy:
   on:
     branch: master
 after_success:
-  - npm install -g travis-deploy-once
-  - travis-deploy-once "npm run semantic-release"
+  - npm run semantic-release
