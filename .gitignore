@@ -1,2 +1,4 @@
 node_modules/
 .rpt2_cache/
+example/node_modules/
+example/build/

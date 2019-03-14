@@ -1,64 +1,54 @@
-import createStore, { StoreAction, StoreReducer } from "../../src/index";
+import createStore, { StoreAction, StoreReducer } from 'use-pipe';
 
 enum Action {
-  setDetails = "setDetails",
-  setInfo = "setInfo",
-  changeCounter = "changeCounter"
+	setDetails = 'setDetails',
+	setInfo = 'setInfo',
+	changeCounter = 'changeCounter',
 }
 
 type Data = {
-  info?: string;
-  details?: string;
-  count: number;
+	info?: string | null;
+	details?: string | null;
+	count: number;
 };
 
-const fetchDetails = (id: number): StoreAction<Action, Data> => async (
-  dispatch,
-  state
-) => {
-  const res = await Promise.resolve({ data: `Hello details! with id ${id}` });
+const fetchDetails = (id: number): StoreAction<Action, Data> => async (dispatch, state) => {
+	const res = await Promise.resolve({ data: `Hello details! with id ${id}` });
 
-  dispatch({ type: Action.setDetails, payload: res.data });
+	dispatch({ type: Action.setDetails, payload: res.data });
 };
 
 const fetchInfo = (): StoreAction<Action, Data> => async (dispatch, state) => {
-  const res = await Promise.resolve({ data: "Hello info" });
+	const res = await Promise.resolve({ data: 'Hello info' });
 
-  dispatch({ type: Action.setInfo, payload: res.data });
+	dispatch({ type: Action.setInfo, payload: res.data });
 };
 
-const changeCounter = (diff: string): StoreAction<Action, Data> => (
-  dispatch,
-  state
-) => {
-  dispatch({ type: Action.changeCounter, payload: parseInt(diff, 10) });
+const changeCounter = (diff: string): StoreAction<Action, Data> => (dispatch, state) => {
+	dispatch({ type: Action.changeCounter, payload: parseInt(diff, 10) });
 };
 
 const actions = {
-  fetchDetails,
-  fetchInfo,
-  changeCounter
+	fetchDetails,
+	fetchInfo,
+	changeCounter,
 };
 
 const reducer: StoreReducer<Action, Data> = {
-  [Action.setDetails]: (state, details) => ({ ...state, details }),
-  [Action.setInfo]: (state, info) => ({ ...state, info }),
-  [Action.changeCounter]: (state, diff) => ({
-    ...state,
-    count: state.count + diff
-  })
+	[Action.setDetails]: (state, details) => ({ ...state, details }),
+	[Action.setInfo]: (state, info) => ({ ...state, info }),
+	[Action.changeCounter]: (state, diff) => ({
+		...state,
+		count: state.count + diff,
+	}),
 };
 
 const initialState: Data = {
-  info: null,
-  details: null,
-  count: 0
+	info: null,
+	details: null,
+	count: 0,
 };
 
-export const [context, Provider, useStore] = createStore(
-  reducer,
-  actions,
-  initialState
-);
+export const [context, Provider, useStore] = createStore(reducer, actions, initialState);
 
 export default context;

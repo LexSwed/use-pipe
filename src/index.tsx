@@ -1,4 +1,16 @@
-import React, { Context, useReducer, Dispatch, createContext, FunctionComponent, useContext, Reducer } from 'react';
+import React, {
+	Context,
+	useReducer,
+	Dispatch,
+	createContext,
+	FunctionComponent,
+	useContext,
+	Reducer,
+	useMemo,
+	useEffect,
+	useRef,
+	MutableRefObject,
+} from 'react';
 
 function createStore<S = any, A extends StoreActions = any>(
 	reducer: StoreReducer<any, S>,
@@ -9,10 +21,15 @@ function createStore<S = any, A extends StoreActions = any>(
 	const reducerFn: Reducer<S, Action> = (state: S, { type, payload }): S => reducer[type](state, payload);
 
 	const StoreProvider: FunctionComponent = ({ children }) => {
-		const [state, dispatch] = useReducer(reducerFn, initialState);
-		const thunks = createThunks(actions, dispatch, state);
+		const store = useReducer(reducerFn, initialState);
+		const currentRef = useRef(store);
+		const thunks = useMemo(() => createThunks(actions, currentRef), [currentRef]);
 
-		return <context.Provider value={[state, thunks]}>{children}</context.Provider>;
+		useEffect(() => {
+			currentRef.current = store;
+		});
+
+		return <context.Provider value={[store[0], thunks]}>{children}</context.Provider>;
 	};
 
 	const useStore: useStore<S, A> = selector => {
@@ -27,10 +44,17 @@ function createStore<S = any, A extends StoreActions = any>(
 
 export default createStore;
 
-function createThunks<A extends StoreActions, S>(actions: A, dispatch: Dispatch<Action>, state: S): StoreThunks<A> {
+function createThunks<A extends StoreActions, S>(
+	actions: A,
+	ref: MutableRefObject<[S, Dispatch<Action>]>,
+): StoreThunks<A> {
 	return Object.keys(actions).reduce(
 		(res, name) => {
-			res[name] = (...args) => actions[name](...args)(dispatch, state);
+			res[name] = (...args) => {
+				const [state, dispatch] = ref.current;
+
+				return actions[name](...args)(dispatch, state);
+			};
 			return res;
 		},
 		{} as StoreThunks<A>,
