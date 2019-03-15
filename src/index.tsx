@@ -25,9 +25,7 @@ function createStore<S = any, A extends StoreActions = any>(
 		const currentRef = useRef(store);
 		const thunks = useMemo(() => createThunks(actions, currentRef), [currentRef]);
 
-		useEffect(() => {
-			currentRef.current = store;
-		});
+		currentRef.current = store;
 
 		return <context.Provider value={[store[0], thunks]}>{children}</context.Provider>;
 	};
