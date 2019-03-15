@@ -7,7 +7,6 @@ import React, {
 	useContext,
 	Reducer,
 	useMemo,
-	useEffect,
 	useRef,
 	MutableRefObject,
 } from 'react';
